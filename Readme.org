@@ -3,31 +3,37 @@
 - Scrapes page and saves result to https://localhost:3000/events for your future use.
 
 ** Step to run
-1. Clone the repo and:
+1. Clone the repo
+   #+begin_src sh
+   git clone git@github.com:thapakazi/x-tesion.git /tmp
+   #+end_src
+
 2. Get deps
-- for this you need:
-  - Justfile installed: https://github.com/casey/just
-  - a simple stupid backend like [[https://github.com/typicode/json-server][json-server]]
+    for this you need:
 
-   ```
-   npm install json-server
+   - Just installed: https://github.com/casey/just
+   - a simple stupid backend like [[https://github.com/typicode/json-server][json-server]]
 
-   # create a dummy file
-   just reset
+    #+begin_src sh
+    npm install json-server
 
-   # start the server
-   npx json-server db.json
-  ```
+    # create a dummy file
+    just reset
+
+    # start the server
+    npx json-server db.json
+    #+end_src
+
 3. Load chrome extension
-- Visit: chrome://extensions/
-  - Enable Developer mode
-  - Load unpacked
-  - point it to your x-tension directory
+  Visit: [[ chrome://extensions/][chrome://extensions/]]
+   - Enable Developer mode
+   - Load unpacked
+   - point it to your x-tension directory `/tmp/x-tension`
 
 4. Visit page like: meetup.com or any site
    and you will see a `Scrape and Save data` at top right corner
 
-5. view your results in db.json
-   ```bash
+5. View your results in db.json
+   #+begin_src sh
   curl -s localhost:3000/events | jq  -c '.[] | .title'
-   ```
+   #+end_src
