@@ -24,6 +24,9 @@ async function scrapeData() {
   if (domain.includes('meetup.com')) {
     return parseMeetup();  // Call the Meetup parser function
   }
+  if (domain.includes('lu.ma')) {
+    return parseLuma();  // Call the Luma parser function
+  }
 
   // If the domain is unknown, fallback to the generic parser
   return fallbackParse();
