@@ -1,0 +1,33 @@
+** My simple stupid chrome extension
+
+- Scrapes page and saves result to https://localhost:3000/events for your future use.
+
+** Step to run
+1. Clone the repo and:
+2. Get deps
+- for this you need:
+  - Justfile installed: https://github.com/casey/just
+  - a simple stupid backend like [[https://github.com/typicode/json-server][json-server]]
+
+   ```
+   npm install json-server
+
+   # create a dummy file
+   just reset
+
+   # start the server
+   npx json-server db.json
+  ```
+3. Load chrome extension
+- Visit: chrome://extensions/
+  - Enable Developer mode
+  - Load unpacked
+  - point it to your x-tension directory
+
+4. Visit page like: meetup.com or any site
+   and you will see a `Scrape and Save data` at top right corner
+
+5. view your results in db.json
+   ```bash
+  curl -s localhost:3000/events | jq  -c '.[] | .title'
+   ```
