@@ -31,7 +31,7 @@
    - point it to your x-tension directory `/tmp/x-tension`
 
 4. Visit page like: meetup.com or any site
-   and you will see a `Scrape and Save data` at top right corner
+   and you will see a `Scrape and Save data` at bottom right corner
 
 5. View your results in db.json
    #+begin_src sh
