@@ -12,10 +12,11 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "content.js",
-        "parser/meetup.js",
-        "parser/meetup-search.js",
-        "parser/luma.js"
+        "parser/meetup/common.js",
+        "parser/meetup/meetup.js",
+        "parser/meetup/meetup-search.js",
+        "parser/luma.js",
+        "content.js"
       ],
       "run_at": "document_end"
     }

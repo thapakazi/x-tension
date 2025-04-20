@@ -14,19 +14,7 @@ function getMeetupList() {
         let eventLink = event.querySelector('a') ? event.querySelector('a').href : null;
 
         // Extract group name and event ID from the event URL
-        let groupName = null;
-        let eventId = null;
-
-        if (eventLink) {
-            // Match the event link pattern: https://www.meetupl.com/group/event_id/...
-            let regex = /https:\/\/www\.meetup\.com\/([^\/]+)\/events\/([^\/?]+)/;
-            let matches = eventLink.match(regex);
-
-            if (matches) {
-                groupName = matches[1];  // Group name from URL
-                eventId = matches[2];     // Event ID from URL
-            }
-        }
+        let {groupName,eventId} = getMeetupMeta(eventLink);
 
         // Create an object for the event details
         eventDetails.push({

@@ -1,18 +1,14 @@
 // Function to check if the event is online or in-person
-function getEventIdAndType() {
+function getEventType() {
   const onlineButton = document.querySelector('[data-testid="attend-online-btn"]');
-  const inPersonButton = document.querySelector('[data-testid="attend-irl-btn"]');
-
   if (onlineButton) {
-    const eventId = onlineButton.getAttribute('eventid');
-    return { eventId, type: 'online' };
+    return  'online';
   }
+  const inPersonButton = document.querySelector('[data-testid="attend-irl-btn"]');
   if (inPersonButton) {
-    const eventId = inPersonButton.getAttribute('eventid');
-    return { eventId, type: 'in-person' };
+    return 'in-person';
   }
-
-  return { eventId: null, type: null };
+  return null;
 }
 
 // Function to parse the event details for meetup.com
@@ -41,13 +37,17 @@ function parseMeetup() {
   const imageUrl = eventImage ? eventImage.getAttribute('src') : null;
 
   // Get the event type (online or in-person)
-  const {eventId, type} = getEventIdAndType();
+  const type = getEventType();
+
+  let url = window.location.href;
+  let { groupName, eventId } = getMeetupMeta(url);
 
   // Return parsed event details
   return {
-    id: eventId || null,
+    id: eventId,
+    groupName: groupName,
     title: title || null,
-    url: window.location.href,
+    url: url,
     eventType: type,
     time: time || null,
     description: description || null,
