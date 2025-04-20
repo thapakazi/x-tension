@@ -6,6 +6,11 @@ function getDomain(url) {
   return domainMatch ? domainMatch[1] : '';
 }
 
+function isMeetupFindURL(url) {
+    const re = /^https?:\/\/(www\.)?meetup\.com\/find(\/\?.*)?$/;
+    return re.test(url);
+}
+
 // Fallback parser for other domains (generally retrieves entire HTML)
 function fallbackParse() {
   return {
@@ -22,7 +27,11 @@ async function scrapeData() {
 
   // Check for known domains and apply specific parsers
   if (domain.includes('meetup.com')) {
-    return parseMeetup();  // Call the Meetup parser function
+    let isSearch = isMeetupFindURL(url);
+    if(isSearch ){
+      return getMeetupList();
+    }
+    return parseMeetup();
   }
   if (domain.includes('lu.ma')) {
     return parseLuma();  // Call the Luma parser function
