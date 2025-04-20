@@ -42,4 +42,4 @@ get-data title:
     curl -s localhost:3000/events | jq  -c ".[] | .${1}"
 
 get-data-all:
-    curl -s localhost:3000/events | jq .
+    curl -s localhost:3000/meetup| jq .

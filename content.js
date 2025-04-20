@@ -1,5 +1,3 @@
-// content.js
-
 // Function to determine the domain from the URL
 function getDomain(url) {
   const domainMatch = url.match(/^https?:\/\/([^/]+)/);
@@ -28,13 +26,16 @@ async function scrapeData() {
   // Check for known domains and apply specific parsers
   if (domain.includes('meetup.com')) {
     let isSearch = isMeetupFindURL(url);
-    if(isSearch ){
-      return getMeetupList();
+    if (isSearch) {
+      const data = getMeetupList();
+      return { data: data, source: '/meetups' };  // Send source as '/meetups'
     }
-    return parseMeetup();
+    const data = parseMeetup();
+    return { data: data, source: '/meetup' };  // Send source as '/meetup'
   }
   if (domain.includes('lu.ma')) {
-    return parseLuma();  // Call the Luma parser function
+    const data = parseLuma();  // Call the Luma parser function
+    return { data: data, source: '/luma' };  // Send source as '/luma'
   }
 
   // If the domain is unknown, fallback to the generic parser
@@ -43,8 +44,11 @@ async function scrapeData() {
 
 // Send scraped data back to the background script
 function sendScrapedData() {
-  scrapeData().then((data) => {
-    chrome.runtime.sendMessage({ type: 'SEND_DATA', payload: data }, function(response) {
+  scrapeData().then((result) => {
+    const { data, source } = result;
+
+    // Send the data with the source to background.js
+    chrome.runtime.sendMessage({ type: 'SEND_DATA', payload: data, source: source }, function(response) {
       if (response && response.success) {
         console.log("Data successfully sent to JSON Server:", response.serverResponse);
       } else {

@@ -1,11 +1,13 @@
-// background.js
+import { getEndpoint } from './parser/endpoints.js';  // Import the function
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'SEND_DATA') {
-    // The received payload now contains Markdown, title, and URL.
     const payload = message.payload;
 
-    fetch('http://localhost:3000/events', {
+    // Get the endpoint based on the source
+    const endpoint = getEndpoint(message.source);
+
+    fetch(`http://localhost:3000${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
